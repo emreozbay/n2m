@@ -3,7 +3,7 @@
 
 {# post/{{ post.id }} #}
 {# {% url 'detail' id=post.id %} #}
-
+<br><br><br><br>
     <div class="container">
     {% for post in posts %}
         <div class="row">
@@ -14,8 +14,10 @@
                 <h3>{{ post.name }}<small> {{ post.recorded_date|timesince }} önce</small></h3>
                 <p>{{ post.surname }}</p>
                 <p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">İncele</a>
-                    <a href="{{ post.get_update_url }}" class="btn btn-default" role="button">Güncelle</a>
-                    <a href="{{ post.get_delete_url }}" class="btn btn-danger" role="button">Sil</a>
+
+                 <a href="{{ post.get_update_url }}" class="btn btn-default" role="button">Güncelle</a>
+                  <a href="{{ post.get_delete_url }}" class="btn btn-danger" role="button">Sil</a>
+
                 </p>
               </div>
             </div>

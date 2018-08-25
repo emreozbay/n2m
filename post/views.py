@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse, get_list_or_404, HttpResponseRedirect, redirect
+from django.shortcuts import render,HttpResponse, get_list_or_404, HttpResponseRedirect, redirect, Http404,get_object_or_404
 from .models import Post
 from .forms import PostForm
 from django.contrib import messages
@@ -10,8 +10,13 @@ def post_index(request):
 
 def post_detail(request,id):
     post = get_list_or_404(Post,id=id)
+
+
+        # formdan gelen bilgileri kaydet
+
     context = {
         'post': post,
+
     }
     return render(request, 'post/detail.html', context)
 
@@ -27,9 +32,10 @@ def post_create(request):
 
     if request.method == "POST":
         # formdan gelen bilgileri kaydet
-        form = PostForm(request.POST, request.FILES or None)
+        form = PostForm(request.POST)
         if form.is_valid():
             post = form.save()
+            post.user = request.user
             messages.success(request, 'Başarılı bir şekilde oluşturdunuz....', extra_tags='mesaj-basarili')
             return HttpResponseRedirect(post.get_absolute_url())
     else:
@@ -50,16 +56,16 @@ def post_create(request):
 
 def post_update(request, id):
 
-    post = get_list_or_404(Post, id=id)
-    if request.method == "POST":
-        # formdan gelen bilgileri kaydet
-        form = PostForm(request.POST, request.FILES or None)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(post.get_absolute_url())
-    form =PostForm()
+    post = get_object_or_404(Post, id=id)
+    form = PostForm(request.POST or None, instance=post)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Başarılı bir şekilde güncellediniz.")
+        return HttpResponseRedirect(post.get_absolute_url())
+
     context = {
-             'form': form,
+             'form': form
         }
 
     return render(request, 'post/form.html', context)
