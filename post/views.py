@@ -9,7 +9,7 @@ def post_index(request):
 
 
 def post_detail(request,id):
-    post = get_list_or_404(Post,id=id)
+    post = get_object_or_404(Post, id=id)
 
 
         # formdan gelen bilgileri kaydet
@@ -70,7 +70,9 @@ def post_update(request, id):
 
     return render(request, 'post/form.html', context)
 
-def post_delete(request, id):
-    post = get_list_or_404(Post, id=id)
+def post_delete(request, id=None):
+    post = get_object_or_404(Post, id=id)
     post.delete()
-    return redirect('post:index')
+
+
+    return redirect("post:index")

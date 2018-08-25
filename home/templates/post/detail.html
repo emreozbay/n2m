@@ -9,24 +9,26 @@
     </ul>
     {% endif %}
         <div class="container">
-        {% for post in posts %}
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3">
-            <div class="thumbnail">
-              <div class="caption">
 
-                <h3>{{ post.name }}<small> {{ post.recorded_date }}</small></h3>
-                <p>{{ post.surname }}</p>
-                <p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">İncele</a>
-                    <a href="{{ post.get_update_url }}" class="btn btn-default" role="button">Güncelle</a>
-                    <a href="{{ post.get_delete_url }}" class="btn btn-danger" role="button">Sil</a>
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="thumbnail">
+                  <div class="caption">
 
-                </p>
+                    <h3><a>{{ post.name }}</a>  <a>{{ post.surname }}</a> <small>{{ post.recorded_date}}</small></h3>
+
+                        <p>{{ post.content|safe|linebreaks }}</p>
+                        <p>
+                    <p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">İncele</a>
+                        <a href="{{ post.get_update_url }}" class="btn btn-default" role="button">Güncelle</a>
+                        <a href="{{ post.get_delete_url }}" class="btn btn-danger" role="button">Sil</a>
+
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-          </div>
-        </div>
-        {% endfor %}
         </div>
 {% endblock %}
