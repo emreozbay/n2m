@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post,Department
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ['name','recorded_date']
@@ -11,6 +11,11 @@ class PostAdmin(admin.ModelAdmin):
 
     class Meta:
         model = Post
+class PostDepartment(admin.ModelAdmin):
+    list_editable = ['department']
+    list_display = ['department']
+    list_display_links = ['department']
+    class Meta:
+        model = Department
 
-
-admin.site.register(Post,PostAdmin)
+admin.site.register(Post,PostAdmin,Department)

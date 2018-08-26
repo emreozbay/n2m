@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse, get_list_or_404, HttpResponseR
 from .models import Post
 from .forms import PostForm
 from django.contrib import messages
+from django.http import JsonResponse
 
 def post_index(request):
     posts = Post.objects.all() #veri tabanından getirdiğimiz değerler.
@@ -72,7 +73,16 @@ def post_update(request, id):
 
 def post_delete(request, id=None):
     post = get_object_or_404(Post, id=id)
-    post.delete()
+    if request.method=='POST':
+        post.delete()
+        return JsonResponse(data={'success':'silindi'})
 
 
-    return redirect("post:index")
+
+
+
+
+
+
+
+    return JsonResponse(data={'success':'Silindi'})

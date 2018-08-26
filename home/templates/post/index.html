@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
 {% block body %}
 
+    <script >
+        $(document).click(function(e){
+            e.preventDefault();
+            var form = $(this);
+            var form_action = form.attr('action');
+            var form_serialize =form.serialize();
+            $.ajax({
+                method:'POST'
+                type:'json',
+                url:form_action,
+                data:form_serialize,
+                success:function (data){
+                    console.log(data['success']);
+                    form.parent().remove();
+                }
+
+            )};
+
+        });
+    </script>
+
+
 {# post/{{ post.id }} #}
 {# {% url 'detail' id=post.id %} #}
 <br><br><br><br>
@@ -13,12 +35,17 @@
 
                 <h3>{{ post.name }}<small> {{ post.recorded_date|timesince }} önce</small></h3>
                 <p>{{ post.surname }}</p>
-                <p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">İncele</a>
 
-                 <a href="{{ post.get_update_url }}" class="btn btn-default" role="button">Güncelle</a>
-                  <a href="{{ post.get_delete_url }}" class="btn btn-danger" role="button">Sil</a>
+                      <p>
+                          <a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">İncele</a>
+                          <a href="{{ post.get_update_url }}" class="btn btn-default" role="button">Güncelle</a>
+                          <form class="form-delete" method="post" action="{% url 'post:delete' post.id %}">{% csrf_token %}
+                            <input name="post_id" type="hidden" value="{{ post.id }}">
+                            <input type="submit" class="btn btn-danger" role="button" value ='delete'></a>
+                          </form>
+                     </p>
 
-                </p>
+
               </div>
             </div>
           </div>

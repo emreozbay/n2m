@@ -30,5 +30,9 @@ class Post(models.Model):
     class Meta:
         ordering = ['-recorded_date','id']
 
+class Department(models.Model):
+    departman = models.CharField(max_length=100)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
 
-
+    def __str__(self):
+        return self.departman
