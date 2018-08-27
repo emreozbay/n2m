@@ -1,17 +1,18 @@
 from django.db import models
 from django.urls import reverse
 
+
 # Create your models here.
 
 class Post(models.Model):
 
     name = models.CharField(max_length=120, verbose_name='adınız')
     surname = models.CharField(max_length=120,verbose_name='Soyadınız')
-    recorded_date  = models.DateTimeField(verbose_name='Kayıt Tarihi', auto_now_add=True)
+    recorded_date = models.DateTimeField(verbose_name='Kayıt Tarihi', auto_now_add=True)
+    department =models.ForeignKey("Department", verbose_name='departman')
 
-    def __str__(self):
-        return self.name
-
+    def __unicode__(self):
+        return "{0} {1}".format(self.name,self.surname)
 
     def get_absolute_url(self):
         return reverse('post:detail',kwargs={'id':self.id})
@@ -31,8 +32,15 @@ class Post(models.Model):
         ordering = ['-recorded_date','id']
 
 class Department(models.Model):
-    departman = models.CharField(max_length=100)
-    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+
+    department_name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.departman
+        return self.department_name
+
+
+
+
+
+
+

@@ -36,6 +36,7 @@ def post_create(request):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save()
+            post.save()
             post.user = request.user
             messages.success(request, 'Başarılı bir şekilde oluşturdunuz....', extra_tags='mesaj-basarili')
             return HttpResponseRedirect(post.get_absolute_url())
@@ -72,6 +73,7 @@ def post_update(request, id):
     return render(request, 'post/form.html', context)
 
 def post_delete(request, id=None):
+
     post = get_object_or_404(Post, id=id)
     if request.method=='POST':
         post.delete()
@@ -85,4 +87,4 @@ def post_delete(request, id=None):
 
 
 
-    return JsonResponse(data={'success':'Silindi'})
+

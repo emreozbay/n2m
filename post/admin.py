@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Post,Department
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['name','recorded_date']
+    list_display = ['name','recorded_date','department']
     list_display_links = ['recorded_date']
     list_filter = ['recorded_date']
     search_fields = ['name','surname']
@@ -11,11 +11,15 @@ class PostAdmin(admin.ModelAdmin):
 
     class Meta:
         model = Post
-class PostDepartment(admin.ModelAdmin):
-    list_editable = ['department']
-    list_display = ['department']
-    list_display_links = ['department']
+
+
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ['department_name']
     class Meta:
         model = Department
+    pass
 
-admin.site.register(Post,PostAdmin,Department)
+
+admin.site.register(Post,PostAdmin)
+
+admin.site.register(Department,DepartmentAdmin)
